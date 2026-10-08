@@ -206,26 +206,9 @@ tr.hit td { background: var(--soft); }
 
       <hr>
 
-      <div class="field">
-        <span class="lbl" id="drv-lbl">O que você já sabe?</span>
-        <div class="seg" role="group" aria-labelledby="drv-lbl">
-          <button type="button" id="m-lucro" data-mode="lucro" aria-pressed="true">Lucro desejado</button>
-          <button type="button" id="m-markup" data-mode="markup" aria-pressed="false">Markup</button>
-          <button type="button" id="m-preco" data-mode="preco" aria-pressed="false">Preço de venda</button>
-        </div>
-      </div>
-
       <div class="field" id="box-lucro">
-        <label for="lucro">Lucro líquido desejado, sobre o preço</label>
+        <label for="lucro">Lucro desejado</label>
         <div class="affix post"><input id="lucro" type="text" inputmode="decimal" value="15" autocomplete="off"><span>%</span></div>
-      </div>
-      <div class="field" id="box-markup" hidden>
-        <label for="markup">Markup sobre o custo</label>
-        <div class="affix post"><input id="markup" type="text" inputmode="decimal" value="50" autocomplete="off"><span>%</span></div>
-      </div>
-      <div class="field" id="box-preco" hidden>
-        <label for="preco">Preço de venda</label>
-        <div class="affix pre"><span>R$</span><input id="preco" type="text" inputmode="decimal" value="150,00" autocomplete="off"></div>
       </div>
     </section>
 
@@ -346,9 +329,7 @@ tr.hit td { background: var(--soft); }
       imposto: opt('imposto'),
       comissao: opt('comissao'),
       outras: opt('outras'),
-      lucro: parse($('lucro').value),
-      markup: parse($('markup').value),
-      preco: parse($('preco').value)
+      lucro: parse($('lucro').value)
     });
     if (r.error) { setErr(r.error); return; }
     setErr('');
@@ -417,19 +398,8 @@ tr.hit td { background: var(--soft); }
     }
   }
 
-  function setMode(m) {
-    mode = m;
-    ['lucro', 'markup', 'preco'].forEach(function (k) {
-      $('box-' + k).hidden = k !== m;
-      $('m-' + k).setAttribute('aria-pressed', k === m ? 'true' : 'false');
-    });
-    render();
-  }
 
-  document.querySelectorAll('.seg button').forEach(function (b) {
-    b.addEventListener('click', function () { setMode(b.dataset.mode); });
-  });
-  ['produto', 'custo', 'imposto', 'comissao', 'outras', 'lucro', 'markup', 'preco'].forEach(function (id) {
+  ['produto', 'custo', 'imposto', 'comissao', 'outras', 'lucro'].forEach(function (id) {
     $(id).addEventListener('input', render);
   });
 
